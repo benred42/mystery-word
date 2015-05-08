@@ -55,7 +55,7 @@ def choose_length(a_list):
 
 ###############################################################################
 
-def demon_display_word(word):
+def demon_display_word(word, guess):
 
     display_list = ["_" for letter in word]
     for index in range(len(display_list)):
@@ -66,7 +66,6 @@ def demon_display_word(word):
             display_list[index] = guess[index].upper()
 
     return " ".join(display_list)
-
 ###############################################################################
 
 def demon_guess(word_list):
