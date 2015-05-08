@@ -2,12 +2,12 @@ import random
 
 
 def easy_words(a_list):
-    easy_list = [word for word in a_list if len(word) <= 6 and len(word) > 3]
+    easy_list = [word for word in a_list if len(word) in range(4,7)]
     return easy_list
 
 
 def medium_words(a_list):
-    medium_list = [word for word in a_list if len(word) <= 8 and len(word) > 5]
+    medium_list = [word for word in a_list if len(word) in range(6,9)]
     return medium_list
 
 
