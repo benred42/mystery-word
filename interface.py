@@ -41,9 +41,9 @@ def guess(word_choice):
 
         if guess != 'quit':
             if check_guess(word, guess):
-                correct_guesses.append(guess.upper())
+                correct_guesses.append(guess)
             else:
-                incorrect_guesses.append(guess.upper())
+                incorrect_guesses.append(guess)
         else:
             os.system('clear')
             print("Goodbye!  Thanks for Playing!")
@@ -63,7 +63,7 @@ def guess_input(guess_list):
             print("You already guessed that letter!")
             return guess_input(guess_list)
     else:
-        print "Invalid guess.  Please try again."
+        print("Invalid guess.  Please try again.")
         return guess_input(guess_list)
 
 
@@ -78,9 +78,9 @@ def guess_display(word, correct_guesses, incorrect_guesses):
 
     number_incorrect = str(len(incorrect_guesses))
     incorrect = " ".join(incorrect_guesses)
-    print("Incorrect guesses({}/8): [{}]\n".format(number, incorrect.upper()))
+    print("Incorrect guesses({}/8): [{}]\n".format(number_incorrect, incorrect.upper()))
 
-    print mystery_word.display_word(word, correct_guesses) + "\n"
+    print(mystery_word.display_word(word, correct_guesses) + "\n")
 
 
 def win_lose(word, correct_guesses, incorrect_guesses):
@@ -108,8 +108,15 @@ def you_lose(word):
 
 
 def welcome_rules():
+    os.system('clear')
     print("Welcome to the Mystery Word Game!")
     print("Guess the word one letter at a time.")
+
+
+def word_length(word):
+    length = str(len(word))
+    print("Your word is {} letters long.".format(length))
+
 
 def play_again():
     yes_no = input("Would you like to play again (y/n)? ").lower()
@@ -126,6 +133,7 @@ def main():
     welcome_rules()
     words = choose_difficulty()
     word = choose_word(words)
+    word_length(word)
 
     guess(word)
 
@@ -134,13 +142,6 @@ def main():
     else:
         os.system('clear')
         return
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
