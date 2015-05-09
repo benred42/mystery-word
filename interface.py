@@ -1,5 +1,7 @@
 import mystery_word
+import demon_words
 import os
+
 
 
 ###############################################################################
@@ -28,6 +30,20 @@ def import_words(filepath):
 
         return clean_text(text)
         #clean_text only really works for files with one word per line.
+
+###############################################################################
+
+def gates_of_hell():
+    are_open = input("Would you like to play on DEMON mode (y/n) ??? ").lower()
+
+    if are_open == "y":
+        return True
+    elif are_open == "n":
+        return False
+    else:
+        print("That is not a valid choice. Please choose again.")
+        return gates_of_hell()
+
 
 ###############################################################################
 
@@ -151,7 +167,7 @@ def guess_display(word, correct_guesses, incorrect_guesses):
 
 ###############################################################################
 
-def win_lose(word, correct_guesses, incorrect_guesses):
+def win_lose(word, correct_guesses, incorrect_guesses, word_list = None):
     """Checks if the user has won or lost the game.  If the
     list of correct guesses contains all the letters in the string or the list
     of incorrect guesses reaches a length of 8 the function will
@@ -165,11 +181,15 @@ def win_lose(word, correct_guesses, incorrect_guesses):
     incorrect_guesses -- list of characters.  If length of list exceeds 7, user
     has lost.
     """
+    if type(word_list) == list:
+        choice = word_list
+    else:
+        choice = word
 
     if mystery_word.is_word_complete(word, correct_guesses):
         return you_win(word)
     elif len(incorrect_guesses) > 7:
-        return you_lose(word)
+        return you_lose(choice)
     else:
         return True
 
@@ -198,6 +218,8 @@ def you_lose(word):
     Keyword Arguments:
     word -- the string the user was trying to guess
     """
+    if type(word) == list:
+        word = mystery_word.random_word(word)
 
     os.system('clear')
     print("I'm sorry, but you've run out of guesses!")
@@ -248,11 +270,14 @@ def main():
     """Initializes game and controls game flow."""
 
     welcome_rules()
-    words = choose_difficulty()
-    word = mystery_word.random_word(words)
-    word_length(word)
+    if gates_of_hell():
+        return demon_words.main()
+    else:
+        words = choose_difficulty()
+        word = mystery_word.random_word(words)
+        word_length(word)
 
-    guess(word)
+        guess(word)
 
     if play_again():
         return main()
