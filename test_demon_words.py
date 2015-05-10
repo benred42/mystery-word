@@ -11,5 +11,5 @@ def test_choose_best_list():
 
 def test_merge_words():
     assert merge_words("t...", "..e.") == "T _ E _"
-    assert merge_words("t...", "..e.", "." , "." , "" ,False) == "t.e."
-    assert merge_words("t...", "t...") == "T _ _ _"
+    assert merge_words("s..................", ".............i.....", "." , "." , "" ,False) == "s............i....."
+    assert merge_words("t...", "....") == "T _ _ _"

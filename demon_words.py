@@ -10,10 +10,12 @@ def choose_best_list(word_list, current, guess):
     word_groups = choice_types(word_list, guess)
     count = 0
 
+
     print("Thinking")
     for word in words:
         if count%1000 == 0:
             print(".")
+
         location = words.index(word)
         choice = word_groups[location]
 
@@ -26,7 +28,6 @@ def choose_best_list(word_list, current, guess):
     largest_group_name = ""
     if len(families) == 2:
         largest_group_name, largest_group = tie_breaker(families)
-        return largest_group_name, largest_group
     else:
         for member in families:
             if len(families[member]) > length:
@@ -75,7 +76,7 @@ def tie_breaker(dictionary):
 ###############################################################################
 
 def choose_length(a_list):
-    random_length = random.choice(range(8,25))
+    random_length = random.choice(range(6,25))
 
     demon_list = [word for word in a_list if len(word) == random_length]
     return demon_list, random_length
@@ -107,6 +108,7 @@ def demon_guess(word_list, length):
     current_state = ("." * length)
 
     while interface.win_lose(current_state, correct_guesses, incorrect_guesses, words):
+
         guess = interface.guess_input((correct_guesses + incorrect_guesses))
                #^handles user input
 
@@ -114,7 +116,7 @@ def demon_guess(word_list, length):
             new_states = choose_best_list(words, current_state, guess)
             if  new_states[0] != current_state:
                 correct_guesses.append(guess)
-                current_state = merge_words(current_state, new_states[0], to_replace = ".", filler = ".", joiner = "", capital = False)
+                current_state = new_states[0]
             else:
                 incorrect_guesses.append(guess)
         else:
