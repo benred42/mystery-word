@@ -1,7 +1,7 @@
 import random
 import os
+import re
 import interface
-import mystery_word
 
 
 ###############################################################################
@@ -10,9 +10,9 @@ import mystery_word
 def choose_best_list(word_list, current, guess):
     """Takes a list and two strings. Creates a dictionary where the keys are
     maps of where the guessed letter could appear in a word and the values are
-    lists of the subset of words from the input list where the letter appears in
-    those locations (example: {"...e":["fate", "lone"], ".ee.":["need"]}).  It
-    will return the value list of the greatest length, choosing randomly in
+    lists of the subset of words from the input list where the letter appears
+    in those locations (example: {"...e":["fate", "lone"], ".ee.":["need"]}).
+    It will return the value list of the greatest length, choosing randomly in
     case of ties and choosing the option that does not contain the guess if
     the dictionary only has two keys. It will also return the corresponding key
     after it has merged the key with the current state of the game (e.g if the
@@ -28,23 +28,7 @@ def choose_best_list(word_list, current, guess):
     guess -- the user-input guess (a single letter string)
     """
 
-    #families = {}
-    words = word_list[:]
     families = choice_types(word_list, guess)
-    #count = 0
-
-
-    #print("Thinking")
-    #for word in words:
-        #if count%1000 == 0:
-            #print(".")
-
-        #location = words.index(word)
-        #choice = word_groups[location]
-
-        #families[choice] = families.get(choice, [])
-        #families[choice] = families[choice]+ [words[location]]
-        #count += 1
 
     length = 0
     largest_group = []
@@ -58,7 +42,8 @@ def choose_best_list(word_list, current, guess):
                 largest_group = families[member]
                 largest_group_name = member
 
-    largest_group_name = merge_words(current, largest_group_name, filler = ".", joiner = "", capital = False)
+    largest_group_name = merge_words(current, largest_group_name,
+                                     filler=".", joiner="", capital=False)
 
     return largest_group_name, largest_group
 
@@ -80,27 +65,13 @@ def choice_types(word_list, guess):
     """
     families = {}
     words = word_list[:]
-    word_groups = []
-    count = 0
-
-    print("Thinking")
+    search = r'[^' + guess + ']'
 
     for word in words:
-        if count%1000 == 0:
-            print(".")
-        count += 1
-        location = words.index(word)
-        blanked_word = []
-        for letter in word:
-            if letter != guess:
-                blanked_word.append(".")
-            else:
-                blanked_word.append(letter)
+        blanked_word = re.sub(search, ".", word)
 
-        choice = ("".join(blanked_word))
-
-        families[choice] = families.get(choice, [])
-        families[choice] = families[choice]+ [words[location]]
+        families[blanked_word] = families.get(blanked_word, [])
+        families[blanked_word].append(word)
 
     return families
 
