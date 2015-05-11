@@ -1,10 +1,10 @@
+import os
 import mystery_word
 import demon_words
-import os
-
 
 
 ###############################################################################
+
 
 def clean_text(text):
     """Takes a string line by line, strips leading and trailing whitespace
@@ -15,7 +15,9 @@ def clean_text(text):
     """
     return [line.strip().lower() for line in text]
 
+
 ###############################################################################
+
 
 def import_words(filepath):
     """Opens a file and places each line from that file in a list, then
@@ -31,9 +33,15 @@ def import_words(filepath):
         return clean_text(text)
         #clean_text only really works for files with one word per line.
 
+
 ###############################################################################
 
+
 def gates_of_hell():
+    """Returns True or False depending on user input.  Is used to switch from
+    normal mode to "demon" mode (controlled by demon_words.py)
+    """
+
     are_open = input("Would you like to play on DEMON mode (y/n) ??? ").lower()
 
     if are_open == "y":
@@ -46,6 +54,7 @@ def gates_of_hell():
 
 
 ###############################################################################
+
 
 def choose_difficulty():
     """From a default imported library of words, filters by word length based
@@ -65,7 +74,9 @@ def choose_difficulty():
         print("That is not a valid choice. Please choose again.")
         return choose_difficulty()
 
+
 ###############################################################################
+
 
 def guess(word_choice):
     """Takes a string and intitializes two empty lists. Asks the user
@@ -102,7 +113,9 @@ def guess(word_choice):
         os.system('clear')
         guess_display(word, correct_guesses, incorrect_guesses)
 
+
 ###############################################################################
+
 
 def guess_input(guess_list):
     """Takes a list.  Checks to see if input from user is:
@@ -129,14 +142,17 @@ def guess_input(guess_list):
         print("Invalid guess.  Please try again.")
         return guess_input(guess_list)
 
+
 ###############################################################################
+
 
 def check_guess(word, guess):
     """Takes two strings.  Checks if 2nd string is in the 1st string and returns
     True if it is, False if it is not.
 
     Keyword Arguments:
-    word -- string to be checked against
+    word -- string to be checked against.
+
     guess -- string must be in the 'word' argument for function to return True
     """
 
@@ -145,7 +161,9 @@ def check_guess(word, guess):
     else:
         return False
 
+
 ###############################################################################
+
 
 def guess_display(word, correct_guesses, incorrect_guesses):
     """Takes a string and two lists. Prints a user-friendly output based on
@@ -154,7 +172,9 @@ def guess_display(word, correct_guesses, incorrect_guesses):
 
     Keyword Arguments:
     word --  string that correct_guesses is checked against
+
     correct_guesses -- list that is checked against "word"
+
     incorrect_guesses -- list whose length and contents is used in first line
     of output
     """
@@ -165,7 +185,9 @@ def guess_display(word, correct_guesses, incorrect_guesses):
 
     print(mystery_word.display_word(word, correct_guesses) + "\n")
 
+
 ###############################################################################
+
 
 def win_lose(word, correct_guesses, incorrect_guesses, word_list = None):
     """Checks if the user has won or lost the game.  If the
@@ -176,10 +198,15 @@ def win_lose(word, correct_guesses, incorrect_guesses, word_list = None):
 
     Keyword Arguments:
     word -- the string correct_guesses is compared to.
+
     correct_guesses -- list of characters compared to 'word' to determine if
     user has won.
+
     incorrect_guesses -- list of characters.  If length of list exceeds 7, user
     has lost.
+
+    word_list -- Default None.  If a list is input the function will hand that
+    list to the you_lose function instead of the first argument ("word")
     """
     if type(word_list) == list:
         choice = word_list
@@ -193,7 +220,9 @@ def win_lose(word, correct_guesses, incorrect_guesses, word_list = None):
     else:
         return True
 
+
 ###############################################################################
+
 
 def you_win(word):
     """Clears the screen and informs the user they have won, shows them the
@@ -209,14 +238,19 @@ def you_win(word):
     print("It was {}".format(word.upper()))
     return False
 
+
 ###############################################################################
+
 
 def you_lose(word):
     """Clears the screen and informs the user they have lost, shows them the
-    full word they failed to guess, and returns False.
+    full word they failed to guess, and returns False. If the input to the
+    function is a list, it will pick a word at random to reveal to the user
+    (used for "demon" mode)
 
     Keyword Arguments:
-    word -- the string the user was trying to guess
+    word -- the string the user was trying to guess/the list of possible words
+    for "demon" mode
     """
     if type(word) == list:
         word = mystery_word.random_word(word)
@@ -226,7 +260,9 @@ def you_lose(word):
     print("The word was {}".format(word.upper()))
     return False
 
+
 ###############################################################################
+
 
 def welcome_rules():
     """Clears the screen and prints a welcome message"""
@@ -235,7 +271,9 @@ def welcome_rules():
     print("Welcome to the Mystery Word Game!")
     print("Guess the word one letter at a time.")
 
+
 ###############################################################################
+
 
 def word_length(word):
     """Takes a string.  Determines the length of string and prints a statement
@@ -248,7 +286,9 @@ def word_length(word):
     length = str(len(word))
     print("Your word is {} letters long.".format(length))
 
+
 ###############################################################################
+
 
 def play_again():
     """Asks the user for input and, if input is valid, returns True or False
@@ -264,7 +304,9 @@ def play_again():
     else:
         return False
 
+
 ###############################################################################
+
 
 def main():
     """Initializes game and controls game flow."""
@@ -285,7 +327,9 @@ def main():
         os.system('clear')
         return
 
+
 ###############################################################################
+
 
 if __name__ == '__main__':
     main()
