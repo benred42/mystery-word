@@ -28,23 +28,23 @@ def choose_best_list(word_list, current, guess):
     guess -- the user-input guess (a single letter string)
     """
 
-    families = {}
+    #families = {}
     words = word_list[:]
-    word_groups = choice_types(word_list, guess)
-    count = 0
+    families = choice_types(word_list, guess)
+    #count = 0
 
 
-    print("Thinking")
-    for word in words:
-        if count%1000 == 0:
-            print(".")
+    #print("Thinking")
+    #for word in words:
+        #if count%1000 == 0:
+            #print(".")
 
-        location = words.index(word)
-        choice = word_groups[location]
+        #location = words.index(word)
+        #choice = word_groups[location]
 
-        families[choice] = families.get(choice, [])
-        families[choice] = families[choice]+ [words[location]]
-        count += 1
+        #families[choice] = families.get(choice, [])
+        #families[choice] = families[choice]+ [words[location]]
+        #count += 1
 
     length = 0
     largest_group = []
@@ -78,20 +78,31 @@ def choice_types(word_list, guess):
 
     guess -- the user-input guess (a single letter string)
     """
-
+    families = {}
     words = word_list[:]
     word_groups = []
+    count = 0
+
+    print("Thinking")
 
     for word in words:
+        if count%1000 == 0:
+            print(".")
+        count += 1
+        location = words.index(word)
         blanked_word = []
         for letter in word:
             if letter != guess:
                 blanked_word.append(".")
             else:
                 blanked_word.append(letter)
-        word_groups.append("".join(blanked_word))
 
-    return word_groups
+        choice = ("".join(blanked_word))
+
+        families[choice] = families.get(choice, [])
+        families[choice] = families[choice]+ [words[location]]
+
+    return families
 
 
 ###############################################################################
