@@ -1,6 +1,9 @@
 import random
 import os
+<<<<<<< HEAD
 import re
+=======
+>>>>>>> master
 import interface
 
 
@@ -10,15 +13,28 @@ import interface
 def choose_best_list(word_list, current, guess):
     """Takes a list and two strings. Creates a dictionary where the keys are
     maps of where the guessed letter could appear in a word and the values are
+<<<<<<< HEAD
     lists of the subset of words from the input list where the letter appears
     in those locations (example: {"...e":["fate", "lone"], ".ee.":["need"]}).
     It will return the value list of the greatest length, choosing randomly in
+=======
+    lists of the subset of words from the input list where the letter appears in
+    those locations (example: {"...e":["fate", "lone"], ".ee.":["need"]}).  It
+    will return the value list of the greatest length, choosing randomly in
+>>>>>>> master
     case of ties and choosing the option that does not contain the guess if
     the dictionary only has two keys. It will also return the corresponding key
     after it has merged the key with the current state of the game (e.g if the
     game was currently restricted to words that met the condition ".n.rt" and
     the choose_best_list function determined the best subset to be those meeting
     the condition "i...." the function would return "in.rt").
+<<<<<<< HEAD
+
+    Keyword Arguments:
+    word_list -- the current list of possible words
+
+    current -- the current state of the game (".n.rt" in the example above)
+=======
 
     Keyword Arguments:
     word_list -- the current list of possible words
@@ -28,7 +44,27 @@ def choose_best_list(word_list, current, guess):
     guess -- the user-input guess (a single letter string)
     """
 
+    families = {}
+    words = word_list[:]
+    word_groups = choice_types(word_list, guess)
+    count = 0
+
+    print("Thinking")
+    for word in words:
+        if count % 1000 == 0:
+            print(".")
+>>>>>>> master
+
+    guess -- the user-input guess (a single letter string)
+    """
+
+<<<<<<< HEAD
     families = choice_types(word_list, guess)
+=======
+        families[choice] = families.get(choice, [])
+        families[choice] = families[choice] + [words[location]]
+        count += 1
+>>>>>>> master
 
     length = 0
     largest_group = []
@@ -42,8 +78,13 @@ def choose_best_list(word_list, current, guess):
                 largest_group = families[member]
                 largest_group_name = member
 
+<<<<<<< HEAD
     largest_group_name = merge_words(current, largest_group_name,
                                      filler=".", joiner="", capital=False)
+=======
+    largest_group_name = merge_words(
+        current, largest_group_name, filler=".", joiner="", capital=False)
+>>>>>>> master
 
     return largest_group_name, largest_group
 
@@ -63,7 +104,11 @@ def choice_types(word_list, guess):
 
     guess -- the user-input guess (a single letter string)
     """
+<<<<<<< HEAD
     families = {}
+=======
+
+>>>>>>> master
     words = word_list[:]
     search = r'[^' + guess + ']'
 
@@ -74,6 +119,7 @@ def choice_types(word_list, guess):
         families[blanked_word].append(word)
 
     return families
+
 
 
 ###############################################################################
@@ -114,7 +160,11 @@ def choose_length(a_list):
     a_list -- the list of strings to be filtered.
     """
 
+<<<<<<< HEAD
     random_length = random.choice(range(6,25))
+=======
+    random_length = random.choice(range(6, 25))
+>>>>>>> master
 
     demon_list = [word for word in a_list if len(word) == random_length]
     return demon_list, random_length
@@ -123,7 +173,11 @@ def choose_length(a_list):
 ###############################################################################
 
 
+<<<<<<< HEAD
 def merge_words(word, guess, to_replace = ".", filler = "_", joiner = " ", capital = True):
+=======
+def merge_words(word, guess, to_replace=".", filler="_", joiner=" ", capital=True):
+>>>>>>> master
     """Takes a maximum of 5 strings and 1 boolean (minimum 2 strings).  The
     first 2 strings ("word" and "guess") must be the same length.  Essentially,
     the function creates a new string list using the "filler" connected by the
@@ -199,11 +253,11 @@ def demon_guess(word_list, length):
     while interface.win_lose(current_state, correct_guesses, incorrect_guesses, words):
 
         guess = interface.guess_input((correct_guesses + incorrect_guesses))
-               #^handles user input
+        # ^handles user input
 
         if guess != 'quit':
             new_states = choose_best_list(words, current_state, guess)
-            if  new_states[0] != current_state:
+            if new_states[0] != current_state:
                 correct_guesses.append(guess)
                 current_state = new_states[0]
             else:
@@ -216,8 +270,11 @@ def demon_guess(word_list, length):
         words = new_states[1]
 
         os.system('clear')
-        print("   (_(\n  ('')\n_  \"\ )>,_     .-->\n_>--w/((_ >,_.'\n       ///\n       \"`\"")
-        interface.guess_display(current_state, correct_guesses, incorrect_guesses)
+        print(
+            "   (_(\n  ('')\n_  \"\ )>,_     .-->\n_>--w/((_ >,_.'\n       ///\n       \"`\"")
+        interface.guess_display(
+            current_state, correct_guesses, incorrect_guesses)
+
 
 
 ###############################################################################
@@ -226,7 +283,12 @@ def demon_guess(word_list, length):
 def main():
     """Initializes "demon" mode and controls game flow."""
 
+<<<<<<< HEAD
     words, length = choose_length(interface.import_words('/usr/share/dict/words'))
+=======
+    words, length = choose_length(
+        interface.import_words('/usr/share/dict/words'))
+>>>>>>> master
     interface.word_length(words[0])
 
     demon_guess(words, length)
